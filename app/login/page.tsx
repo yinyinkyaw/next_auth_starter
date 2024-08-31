@@ -19,6 +19,7 @@ type LoginFormProps = {
 
 export default function LoginPage() {
   const form = useForm<LoginFormProps>();
+
   return (
     <article className="max-w-md mx-auto w-full bg-slate-200 p-6 rounded-lg">
       <h2 className="text-xl text-center my-2">Login</h2>
@@ -43,7 +44,7 @@ export default function LoginPage() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} type="password" />
                 </FormControl>
               </FormItem>
             )}
