@@ -14,4 +14,7 @@ export const endpoints = {
     authorize: "/oauth/authorize",
     getToken: "/oauth/token",
   },
+  notes: {
+    list: "/notes",
+  },
 };
