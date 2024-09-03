@@ -10,36 +10,20 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Resolver, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema } from "./schema";
+import Link from "next/link";
 
 type LoginFormProps = {
   username: string;
   password: string;
 };
 
-const resolver: Resolver<LoginFormProps> = async (values) => {
-  return {
-    values: values.username && values.password ? values : {},
-    errors: !values.username
-      ? {
-          username: {
-            type: "required",
-            message: "Please Fill Username",
-          },
-        }
-      : !values.password
-      ? {
-          password: {
-            type: "required",
-            message: "Please Fill Password",
-          },
-        }
-      : {},
-  };
-};
 export default function LoginForm() {
   const form = useForm<LoginFormProps>({
-    resolver,
+    resolver: zodResolver(loginSchema),
+    reValidateMode: "onChange",
   });
 
   const onSubmitLogin: SubmitHandler<LoginFormProps> = (data) => {
@@ -75,7 +59,17 @@ export default function LoginForm() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <div className="flex justify-between items-center">
+                    <FormLabel>Password</FormLabel>
+                    <div className="text-sm">
+                      <button
+                        type="button"
+                        className="font-semibold text-indigo-600 hover:text-indigo-500"
+                      >
+                        Forgot password?
+                      </button>
+                    </div>
+                  </div>
                   <FormControl>
                     <Input {...field} type="password" />
                   </FormControl>
@@ -83,9 +77,18 @@ export default function LoginForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <Button type="submit">Login</Button>
           </form>
         </Form>
+        <p className="mt-10 text-center text-sm text-gray-500">
+          Not a member?
+          <Link
+            href="/signup"
+            className=" ml-2 font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+          >
+            Sign Up
+          </Link>
+        </p>
       </div>
     </article>
   );
