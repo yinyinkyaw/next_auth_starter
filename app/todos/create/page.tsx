@@ -28,6 +28,10 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { createToDoSchema } from "./schema";
+import { useMutation } from "@tanstack/react-query";
+import { apiInstnace, endpoints } from "@/utils/domain";
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
 
 type CreateToDoProps = {
   name: string;
@@ -35,12 +39,15 @@ type CreateToDoProps = {
 };
 
 export default function CreateToDoPage() {
+  const router = useRouter();
   const form = useForm<CreateToDoProps>({
     resolver: zodResolver(createToDoSchema),
     reValidateMode: "onChange",
   });
 
-  const onCreate: SubmitHandler<CreateToDoProps> = async (formData) => {};
+  const onCreate: SubmitHandler<CreateToDoProps> = async (formData) => {
+    console.log("form data::", formData);
+  };
 
   return (
     <section className="container mx-auto p-6">
