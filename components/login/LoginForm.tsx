@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "./schema";
+import { loginSchema } from "../../app/(authentication)/login/schema";
 import Link from "next/link";
 
 type LoginFormProps = {

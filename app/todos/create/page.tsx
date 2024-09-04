@@ -25,10 +25,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { createToDoSchema } from "./schema";
+
+type CreateToDoProps = {
+  name: string;
+  status: "to-do" | "doing" | "done";
+};
 
 export default function CreateToDoPage() {
-  const form = useForm();
+  const form = useForm<CreateToDoProps>({
+    resolver: zodResolver(createToDoSchema),
+    reValidateMode: "onChange",
+  });
+
+  const onCreate: SubmitHandler<CreateToDoProps> = async (formData) => {};
 
   return (
     <section className="container mx-auto p-6">
@@ -46,7 +58,7 @@ export default function CreateToDoPage() {
       </div>
 
       <Form {...form}>
-        <form className="mt-4 space-y-4">
+        <form className="mt-4 space-y-4" onSubmit={form.handleSubmit(onCreate)}>
           <FormField
             control={form.control}
             name="name"
@@ -66,7 +78,10 @@ export default function CreateToDoPage() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel htmlFor="status">Status</FormLabel>
-                <Select>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Choose Status" />
                   </SelectTrigger>
@@ -78,6 +93,7 @@ export default function CreateToDoPage() {
                     </SelectGroup>
                   </SelectContent>
                 </Select>
+                <FormMessage />
               </FormItem>
             )}
           />

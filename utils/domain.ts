@@ -16,5 +16,6 @@ export const endpoints = {
   },
   notes: {
     list: "/notes",
+    create: "/notes/create",
   },
 };
