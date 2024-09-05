@@ -28,10 +28,11 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { createToDoSchema } from "./schema";
-import { useMutation } from "@tanstack/react-query";
 import { apiInstnace, endpoints } from "@/utils/domain";
-import { useRouter } from "next/navigation";
-import { useTransition } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { EventHandler, FormEvent } from "react";
+import { redirect, useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 type CreateToDoProps = {
   name: string;
@@ -45,8 +46,19 @@ export default function CreateToDoPage() {
     reValidateMode: "onChange",
   });
 
+  const mutation = useMutation({
+    mutationFn: (newToDo: CreateToDoProps) => {
+      return apiInstnace.post(`${endpoints.notes.create}`, newToDo);
+    },
+  });
+
   const onCreate: SubmitHandler<CreateToDoProps> = async (formData) => {
-    console.log("form data::", formData);
+    mutation.mutate(formData, {
+      onSuccess: () => {
+        toast.success("New To Do is added!");
+        router.push("/todos");
+      },
+    });
   };
 
   return (
@@ -73,7 +85,7 @@ export default function CreateToDoPage() {
               <FormItem>
                 <FormLabel htmlFor="name">Name</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} defaultValue={field.value} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -104,7 +116,9 @@ export default function CreateToDoPage() {
               </FormItem>
             )}
           />
-          <Button type="submit">Create</Button>
+          <Button type="submit">
+            {mutation.isPending ? "Loading ..." : "Create"}
+          </Button>
         </form>
       </Form>
     </section>

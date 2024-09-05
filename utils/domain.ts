@@ -4,7 +4,7 @@ import { api_url } from "./constants";
 export const apiInstnace = axios.create({
   baseURL: api_url,
   headers: {
-    "Content-Type": "application/json",
+    "Content-Type": "application/x-www-form-urlencoded",
     Accept: "application/json",
   },
 });

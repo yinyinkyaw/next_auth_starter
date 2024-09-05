@@ -21,7 +21,4 @@ export const noteColumn: Array<ColumnDef<Note>> = [
     accessorKey: "createAt",
     header: "Created at",
   },
-  {
-    header: "Actions",
-  },
 ];
