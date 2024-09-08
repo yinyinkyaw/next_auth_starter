@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "To Do",
   description: "To Do list",
 };
+
 export default function NotesPage() {
   return (
     <section className="p-6 bg-background dark:bg-background">
