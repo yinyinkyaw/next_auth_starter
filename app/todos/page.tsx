@@ -1,12 +1,13 @@
-import { DataTable } from "@/components/common/data-table";
-import { apiInstnace, endpoints } from "@/utils/domain";
-import { noteColumn } from "./columns";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import TodoTable from "./TodoTable";
+import { Metadata } from "next";
 
-export default async function NotesPage() {
-  const notes = await apiInstnace.get(`${endpoints.notes.list}`);
-
+export const metadata: Metadata = {
+  title: "To Do",
+  description: "To Do list",
+};
+export default function NotesPage() {
   return (
     <section className="p-6 bg-background dark:bg-background">
       <div className="flex justify-between">
@@ -15,7 +16,7 @@ export default async function NotesPage() {
           <Button>Create To-Do</Button>
         </Link>
       </div>
-      <DataTable columns={noteColumn} data={notes.data} />
+      <TodoTable />
     </section>
   );
 }
