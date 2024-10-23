@@ -13,13 +13,18 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <QueryProviders>{children}</QueryProviders>
+        <QueryProviders>
+          {modal}
+          {children}
+        </QueryProviders>
         <Toaster
           position="top-center"
           reverseOrder={false}
@@ -31,8 +36,19 @@ export default function RootLayout({
             className: "",
             duration: 5000,
             style: {
-              background: "#363636",
-              color: "#fff",
+              fontFamily: "sans-serif",
+              fontSize: "1rem",
+              color: "hsl(var(--background))",
+            },
+            success: {
+              style: {
+                background: "hsl(var(--chart-2))",
+              },
+            },
+            error: {
+              style: {
+                background: "hsl(var(--destructive))",
+              },
             },
           }}
         />

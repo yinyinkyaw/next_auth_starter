@@ -30,8 +30,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { createToDoSchema } from "./schema";
 import { apiInstnace, endpoints } from "@/utils/domain";
 import { useMutation } from "@tanstack/react-query";
-import { EventHandler, FormEvent } from "react";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 type CreateToDoProps = {

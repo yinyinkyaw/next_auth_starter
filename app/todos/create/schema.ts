@@ -7,3 +7,5 @@ export const createToDoSchema = z.object({
     invalid_type_error: "Invalid Status!",
   }),
 });
+
+export type createToDoSchemaType = z.infer<typeof createToDoSchema>;

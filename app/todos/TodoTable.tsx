@@ -2,7 +2,7 @@
 
 import { DataTable } from "@/components/common/data-table";
 import { apiInstnace, endpoints } from "@/utils/domain";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { noteColumn } from "./columns";
 

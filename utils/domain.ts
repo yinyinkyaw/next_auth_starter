@@ -18,5 +18,7 @@ export const endpoints = {
   notes: {
     list: "/notes/list",
     create: "/notes/create",
+    detail: "/notes",
+    update: "/notes/update",
   },
 };
