@@ -20,5 +20,6 @@ export const endpoints = {
     create: "/notes/create",
     detail: "/notes",
     update: "/notes/update",
+    delete: "/notes",
   },
 };

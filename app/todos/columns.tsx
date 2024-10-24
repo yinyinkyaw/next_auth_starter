@@ -9,8 +9,7 @@ import EditIcon from "@/public/icons/edit.svg";
 import TrashIcon from "@/public/icons/trash.svg";
 import toast from "react-hot-toast";
 import { cn } from "@/lib/utils";
-
-const onDelete = (info: any) => {};
+import DeleteToDoItem from "@/components/todos/delete/DeleteToDoItem";
 
 export const noteColumn: Array<ColumnDef<Note>> = [
   {
@@ -51,7 +50,7 @@ export const noteColumn: Array<ColumnDef<Note>> = [
   },
   {
     header: "action",
-    cell: ({ cell, row }) => (
+    cell: ({ row }) => (
       <div className="flex items-center gap-x-4">
         <Link href={`/todos/${row.original.id}/edit`}>
           <Button className="gap-x-2 text-primary bg-secondary hover:text-accent">
@@ -59,13 +58,7 @@ export const noteColumn: Array<ColumnDef<Note>> = [
             Edit
           </Button>
         </Link>
-        <Button
-          className="gap-x-2 text-destructive bg-secondary"
-          onClick={() => onDelete(row.original.id)}
-        >
-          <TrashIcon />
-          Delete
-        </Button>
+        <DeleteToDoItem todoId={row.original.id} />
       </div>
     ),
   },
