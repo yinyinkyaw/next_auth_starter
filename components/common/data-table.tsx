@@ -52,7 +52,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="grid gap-y-3">
-      <div className="container mx-auto border rounded-md">
+      <div className="w-full border rounded-md bg-background">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

@@ -4,6 +4,7 @@ import "./globals.css";
 import QueryProviders from "@/providers/QueryProviders";
 import { Toaster } from "react-hot-toast";
 import AuthProvider from "@/providers/AuthProvider";
+import { ThemeProvider } from "next-themes";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,13 +21,15 @@ export default function RootLayout({
   modal: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <AuthProvider>
-          <QueryProviders>
-            {modal}
-            {children}
-          </QueryProviders>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <QueryProviders>
+              {modal}
+              {children}
+            </QueryProviders>
+          </ThemeProvider>
         </AuthProvider>
         <Toaster
           position="top-center"
