@@ -9,12 +9,14 @@ import {
 } from "@/components/ui/dialog";
 import { apiInstnace, endpoints } from "@/utils/domain";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 export default function EditToDoPage({
   params,
 }: {
   params: { todoId: string };
 }) {
+  const router = useRouter();
   const { isLoading, data } = useQuery({
     queryKey: ["to-dos", "detail", params.todoId],
     queryFn: () =>
@@ -22,7 +24,12 @@ export default function EditToDoPage({
   });
 
   return (
-    <Dialog defaultOpen>
+    <Dialog
+      defaultOpen={true}
+      onOpenChange={() => {
+        router.push(`/todos/${params.todoId}/edit`);
+      }}
+    >
       <DialogContent className="sm:max-w-[38em]">
         <DialogHeader>
           <DialogTitle>Edit To Do Form</DialogTitle>
