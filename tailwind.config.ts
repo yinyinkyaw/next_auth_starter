@@ -92,6 +92,7 @@ const config = {
       },
       fontFamily: {
         rubik: ["Rubik", "sans-serif"],
+        kanit: ["Kanit", "sans-serif"],
       },
     },
   },

@@ -1,66 +1,62 @@
 "use client";
 
+import { createToDoSchema } from "@/app/todos/create/schema";
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
   FormField,
-  FormItem,
   FormLabel,
+  FormItem,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
   Select,
-  SelectContent,
   SelectGroup,
+  SelectContent,
+  SelectValue,
   SelectItem,
   SelectTrigger,
-  SelectValue,
 } from "@/components/ui/select";
-import { Note } from "@/interfaces/notes.interface";
 import { apiInstnace, endpoints } from "@/utils/domain";
-import { todoStatus } from "@/utils/shareData";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Fragment } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-interface EditFormProps {
-  note?: Note;
-}
+type CreateToDoProps = {
+  name: string;
+  status: "to-do" | "doing" | "done";
+};
 
-export default function EditForm({ note }: EditFormProps) {
-  const form = useForm({
-    defaultValues: note,
-  });
-  const queryClient = useQueryClient();
+export default function CreateToDoForm() {
   const router = useRouter();
+  const form = useForm<CreateToDoProps>({
+    resolver: zodResolver(createToDoSchema),
+    reValidateMode: "onChange",
+  });
 
-  const editNode = useMutation({
-    mutationFn: (note: Partial<Note>) =>
-      apiInstnace.put(endpoints.notes.update, note),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["to-dos"],
-      });
-      toast.success("Update data successfully!");
-      router.back();
+  const mutation = useMutation({
+    mutationFn: (newToDo: CreateToDoProps) => {
+      return apiInstnace.post(`${endpoints.notes.create}`, newToDo);
     },
   });
 
-  const onUpdate: SubmitHandler<Partial<Note>> = async (data) => {
-    editNode.mutate(data, {
-      onError: (err) => {
-        console.log("error::", err);
+  const onCreate: SubmitHandler<CreateToDoProps> = async (formData) => {
+    mutation.mutate(formData, {
+      onSuccess: () => {
+        toast.success("New To Do is added!");
+        router.back();
       },
     });
   };
-
   return (
     <Form {...form}>
-      <form className="space-y-4" onSubmit={form.handleSubmit(onUpdate)}>
+      <form className="mt-4 space-y-4" onSubmit={form.handleSubmit(onCreate)}>
         <FormField
           control={form.control}
           name="name"
@@ -68,8 +64,9 @@ export default function EditForm({ note }: EditFormProps) {
             <FormItem>
               <FormLabel htmlFor="name">Name</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} defaultValue={field.value} />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -80,21 +77,18 @@ export default function EditForm({ note }: EditFormProps) {
             <FormItem>
               <FormLabel htmlFor="status">Status</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                </FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Choose Status" />
+                </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    {todoStatus.map((item) => (
-                      <SelectItem key={item.value} value={item.value}>
-                        {item.label}
-                      </SelectItem>
-                    ))}
+                    <SelectItem value="to-do">To Do</SelectItem>
+                    <SelectItem value="doing">Doing</SelectItem>
+                    <SelectItem value="done">Done</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -105,7 +99,7 @@ export default function EditForm({ note }: EditFormProps) {
               <span>Loading...</span>
             </Fragment>
           ) : (
-            "Update"
+            "Create"
           )}
         </Button>
       </form>

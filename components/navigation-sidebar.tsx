@@ -14,7 +14,7 @@ import { Button } from "./ui/button";
 import { useAuthStore } from "@/providers/AuthProvider";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import ThemeSwitcher from "./common/theme-switcher";
-import { ListTodo, UserRound } from "lucide-react";
+import { ListTodo, LogOut, UserRound } from "lucide-react";
 
 export default function NavigationSidebar() {
   const { user } = useAuthStore();
@@ -57,7 +57,7 @@ export default function NavigationSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <div className="flex justify-center gap-x-4">
+        {/* <div className="flex justify-center gap-x-4">
           <Avatar>
             <AvatarImage src={user?.photoURL || ""} />
             <AvatarFallback>{user?.displayName?.charAt(0)}</AvatarFallback>
@@ -73,7 +73,25 @@ export default function NavigationSidebar() {
               <Link href="/signin">Logout</Link>
             </Button>
           </div>
-        </div>
+        </div> */}
+        <SidebarMenu>
+          <SidebarMenuItem className="flex items-center gap-x-2">
+            <Avatar>
+              <AvatarImage src={user?.photoURL || ""} />
+              <AvatarFallback>
+                {user?.displayName?.charAt(0).toLocaleUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+            <div>
+              <p>{user?.displayName}</p>
+              <p>{user?.email}</p>
+            </div>
+          </SidebarMenuItem>
+        </SidebarMenu>
+        <SidebarMenuButton>
+          <LogOut />
+          Logout
+        </SidebarMenuButton>
       </SidebarFooter>
     </Sidebar>
   );

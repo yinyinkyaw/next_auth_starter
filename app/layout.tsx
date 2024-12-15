@@ -42,13 +42,14 @@ export default function RootLayout({
             className: "",
             duration: 5000,
             style: {
-              fontFamily: "sans-serif",
-              fontSize: "1rem",
+              fontFamily: "rubik",
+              fontSize: "0.8rem",
               color: "hsl(var(--background))",
             },
             success: {
               style: {
                 background: "hsl(var(--chart-2))",
+                color: "#fff",
               },
             },
             error: {

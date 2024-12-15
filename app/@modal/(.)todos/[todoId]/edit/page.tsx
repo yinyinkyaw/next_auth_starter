@@ -27,7 +27,7 @@ export default function EditToDoPage({
     <Dialog
       defaultOpen={true}
       onOpenChange={() => {
-        router.push(`/todos/${params.todoId}/edit`);
+        router.back();
       }}
     >
       <DialogContent className="sm:max-w-[38em]">

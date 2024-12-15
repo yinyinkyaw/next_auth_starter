@@ -52,12 +52,15 @@ export const noteColumn: Array<ColumnDef<Note>> = [
     header: "action",
     cell: ({ row }) => (
       <div className="flex items-center gap-x-4">
-        <Link href={`/todos/${row.original.id}/edit`}>
-          <Button className="gap-x-2 text-primary bg-secondary hover:text-accent">
+        <Button
+          className="gap-x-2 text-primary bg-secondary hover:text-accent"
+          asChild
+        >
+          <Link href={`/todos/${row.original.id}/edit`}>
             <EditIcon />
             Edit
-          </Button>
-        </Link>
+          </Link>
+        </Button>
         <DeleteToDoItem todoId={row.original.id} />
       </div>
     ),

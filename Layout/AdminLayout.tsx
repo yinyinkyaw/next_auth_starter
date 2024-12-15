@@ -17,7 +17,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   console.log("user data::", user);
 
   // useEffect(() => {
-  //   if (!user) {
+  //   if (!user?.email) {
   //     toast.error("You are not logged in");
   //     router.push("/signin");
   //   }
@@ -26,7 +26,11 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   return (
     <SidebarProvider>
       <NavigationSidebar />
-      <main>{children}</main>
+      <main className="flex-1 w-full">
+        <section className="p-6 bg-background dark:bg-background">
+          {children}
+        </section>
+      </main>
     </SidebarProvider>
   );
 }

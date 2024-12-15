@@ -3,6 +3,8 @@ import Link from "next/link";
 import TodoTable from "./TodoTable";
 import { Metadata } from "next";
 import AdminLayout from "@/Layout/AdminLayout";
+import { PlusIcon } from "lucide-react";
+import AdminHeaderBar from "@/components/common/admin/admin-header-bar";
 
 export const metadata: Metadata = {
   title: "To Do",
@@ -12,15 +14,18 @@ export const metadata: Metadata = {
 export default function NotesPage() {
   return (
     <AdminLayout>
-      <section className="p-6 bg-background dark:bg-background">
-        <div className="flex justify-between">
-          <h2 className="text-2xl font-medium mb-4">To Dos</h2>
-          <Link href={"/todos/create"}>
-            <Button>Create To-Do</Button>
-          </Link>
-        </div>
-        <TodoTable />
-      </section>
+      <AdminHeaderBar
+        title="To Dos"
+        AppMenu={() => (
+          <Button asChild>
+            <Link href={"/todos/create"}>
+              <PlusIcon className="w-4 h-4" />
+              Create To-Do
+            </Link>
+          </Button>
+        )}
+      />
+      <TodoTable />
     </AdminLayout>
   );
 }
