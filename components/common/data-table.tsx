@@ -15,40 +15,80 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Fragment, useMemo, useState } from "react";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationNext,
-  PaginationPrevious,
-} from "../ui/pagination";
+import { useEffect, useState } from "react";
+import { useQueryState, parseAsInteger } from "nuqs";
 import CustomPagination from "./pagination";
+import { useRouter } from "next/navigation";
 
-interface DataTableProps<TData, TValue> {
+interface ServersidePagination {
+  rowCount: number;
+  manualPagination: true;
+}
+
+interface ClientSidePagination {
+  rowCount?: never;
+  manualPagination: false;
+  pagination?: never;
+  setPagination?: never;
+}
+
+type PaginationType = ServersidePagination | ClientSidePagination;
+
+interface BaseDataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  isLoading?: boolean;
+  isError?: boolean;
 }
+
+type DataTableProps<TData, TValue> = BaseDataTableProps<TData, TValue> &
+  PaginationType;
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  isLoading,
+  rowCount,
+  manualPagination,
+  isError,
 }: DataTableProps<TData, TValue>) {
+  const router = useRouter();
+  const [page] = useQueryState("page", parseAsInteger.withDefault(1));
+  const [limit] = useQueryState("limit", parseAsInteger.withDefault(10));
   const [pagination, setPagination] = useState({
-    pageIndex: 0, //initial page index
-    pageSize: 8, //default page size
+    pageIndex: page,
+    pageSize: limit,
   });
+
+  const paginationConfig = rowCount
+    ? {
+        state: { pagination },
+        onPaginationChange: setPagination,
+        getPaginationRowModel: getPaginationRowModel(),
+      }
+    : {};
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    onPaginationChange: setPagination,
-    state: {
-      pagination,
-    },
+    autoResetPageIndex: false,
+    manualPagination,
+    rowCount,
+    ...paginationConfig,
   });
+
+  const currentPage = table.getState().pagination.pageIndex;
+
+  useEffect(() => {
+    if (manualPagination) {
+      void router.push(`?page=${currentPage}&limit=${limit}`);
+    }
+  }, [router, currentPage, manualPagination, limit]);
+
+  if (isError) {
+    return <div>Something went wrong. Please try again</div>;
+  }
 
   return (
     <div className="grid gap-y-3">
@@ -99,11 +139,17 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
       <CustomPagination
-        hasPrevious={() => table.getCanPreviousPage()}
-        hasNext={() => table.getCanNextPage()}
+        hasPrevious={() =>
+          manualPagination ? page > 1 : table.getCanPreviousPage()
+        }
+        hasNext={() =>
+          manualPagination
+            ? page < table.getPageCount()
+            : table.getCanNextPage()
+        }
         totalPage={table.getPageCount()}
         rowPerPage={table.getState().pagination.pageSize}
-        currentPage={table.getState().pagination.pageIndex + 1}
+        currentPage={table.getState().pagination.pageIndex}
         onPrevious={() => table.previousPage()}
         onNext={() => table.nextPage()}
         onClickPage={(page) => table.setPageIndex(page)}

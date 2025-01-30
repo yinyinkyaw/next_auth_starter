@@ -5,7 +5,7 @@ export default function SignInPage() {
   return (
     <article className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-        Sign In
+        Sign In to your account
       </h2>
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <SignInForm />

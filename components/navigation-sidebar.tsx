@@ -14,7 +14,7 @@ import { Button } from "./ui/button";
 import { useAuthStore } from "@/providers/AuthProvider";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import ThemeSwitcher from "./common/theme-switcher";
-import { ListTodo, LogOut, UserRound } from "lucide-react";
+import { FileText, ListTodo, LogOut, UserRound } from "lucide-react";
 
 export default function NavigationSidebar() {
   const { user } = useAuthStore();
@@ -22,7 +22,7 @@ export default function NavigationSidebar() {
     <Sidebar>
       <SidebarHeader>
         <div className="flex justify-between items-center">
-          <h1>Admin Dashboard</h1>
+          <h1 className="font-kanit text-xl font-bold">Admin Dashboard</h1>
           <ThemeSwitcher />
         </div>
       </SidebarHeader>
@@ -57,23 +57,6 @@ export default function NavigationSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        {/* <div className="flex justify-center gap-x-4">
-          <Avatar>
-            <AvatarImage src={user?.photoURL || ""} />
-            <AvatarFallback>{user?.displayName?.charAt(0)}</AvatarFallback>
-          </Avatar>
-          <div>
-            <p>{user?.displayName}</p>
-            <p>{user?.email}</p>
-            <Button
-              variant="secondary"
-              asChild
-              className="w-full flex justify-start"
-            >
-              <Link href="/signin">Logout</Link>
-            </Button>
-          </div>
-        </div> */}
         <SidebarMenu>
           <SidebarMenuItem className="flex items-center gap-x-2">
             <Avatar>
@@ -102,5 +85,10 @@ const navItems = [
     label: "To Do",
     href: "/todos",
     icon: ListTodo,
+  },
+  {
+    label: "Blogs",
+    href: "/blogs",
+    icon: FileText,
   },
 ];

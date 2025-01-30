@@ -17,7 +17,7 @@ export default function NotesPage() {
       <AdminHeaderBar
         title="To Dos"
         AppMenu={() => (
-          <Button asChild>
+          <Button asChild className="font-rubik">
             <Link href={"/todos/create"}>
               <PlusIcon className="w-4 h-4" />
               Create To-Do

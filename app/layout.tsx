@@ -5,12 +5,16 @@ import QueryProviders from "@/providers/QueryProviders";
 import { Toaster } from "react-hot-toast";
 import AuthProvider from "@/providers/AuthProvider";
 import { ThemeProvider } from "next-themes";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Next Auth Starter",
   description: "Next authenticaiton with prisma ORM",
+  icons: {
+    icon: "/icons/edit.svg",
+  },
 };
 
 export default function RootLayout({
@@ -44,12 +48,11 @@ export default function RootLayout({
             style: {
               fontFamily: "rubik",
               fontSize: "0.8rem",
-              color: "hsl(var(--background))",
+              color: "#fff",
             },
             success: {
               style: {
                 background: "hsl(var(--chart-2))",
-                color: "#fff",
               },
             },
             error: {

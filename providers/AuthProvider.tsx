@@ -4,6 +4,7 @@ import { create } from "zustand";
 import { User as FirebaseUser, onIdTokenChanged } from "firebase/auth";
 import { useEffect } from "react";
 import { auth } from "@/services/firebase";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 interface AuthState {
   user: FirebaseUser | null;
@@ -25,5 +26,5 @@ export default function AuthProvider({
     return () => unsubscribe();
   }, []);
 
-  return <>{children}</>;
+  return <NuqsAdapter>{children}</NuqsAdapter>;
 }
