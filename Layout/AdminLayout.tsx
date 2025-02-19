@@ -16,12 +16,12 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
   console.log("user data::", user);
 
-  // useEffect(() => {
-  //   if (!user?.email) {
-  //     toast.error("You are not logged in");
-  //     router.push("/signin");
-  //   }
-  // }, [user, router]);
+  useEffect(() => {
+    if (!user?.email) {
+      toast.error("You are not logged in");
+      router.push("/signin");
+    }
+  }, [user, router]);
 
   return (
     <SidebarProvider>

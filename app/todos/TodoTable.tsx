@@ -21,7 +21,11 @@ export default function TodoTable() {
 
   return (
     <>
-      <DataTable columns={noteColumn} data={data?.data?.data} />
+      <DataTable
+        columns={noteColumn}
+        data={data?.data?.data}
+        manualPagination={false}
+      />
     </>
   );
 }

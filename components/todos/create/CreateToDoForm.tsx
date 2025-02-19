@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/select";
 import { apiInstnace, endpoints } from "@/utils/domain";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Fragment } from "react";
@@ -39,10 +39,14 @@ export default function CreateToDoForm() {
     resolver: zodResolver(createToDoSchema),
     reValidateMode: "onChange",
   });
+  const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: (newToDo: CreateToDoProps) => {
       return apiInstnace.post(`${endpoints.notes.create}`, newToDo);
+    },
+    onSuccess: () => {
+      return queryClient.invalidateQueries({ queryKey: ["to-dos"] });
     },
   });
 

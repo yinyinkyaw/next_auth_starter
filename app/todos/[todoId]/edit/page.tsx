@@ -9,6 +9,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import AdminLayout from "@/Layout/AdminLayout";
 import { apiInstnace, endpoints } from "@/utils/domain";
 import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
@@ -32,24 +33,26 @@ export default function EditTodoPage({
   }
 
   return (
-    <section className="container mx-auto p-10">
-      <div className="mb-4">
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/todos">To Dos</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>Edit To Do</BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-      </div>
-      <Card>
-        <CardHeader>Edit To Do Form</CardHeader>
-        <CardContent>
-          <EditForm note={data?.data.data} />
-        </CardContent>
-      </Card>
-    </section>
+    <AdminLayout>
+      <section className="container mx-auto p-10">
+        <div className="mb-4">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/todos">To Dos</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>Edit To Do</BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
+        <Card>
+          <CardHeader>Edit To Do Form</CardHeader>
+          <CardContent>
+            <EditForm note={data?.data.data} />
+          </CardContent>
+        </Card>
+      </section>
+    </AdminLayout>
   );
 }

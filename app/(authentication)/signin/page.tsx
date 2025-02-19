@@ -7,7 +7,7 @@ export default function SignInPage() {
       <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
         Sign In to your account
       </h2>
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      <section className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <SignInForm />
         <p className="mt-10 text-center text-sm text-gray-500">
           Not a member?
@@ -18,7 +18,7 @@ export default function SignInPage() {
             Sign Up
           </Link>
         </p>
-      </div>
+      </section>
     </article>
   );
 }

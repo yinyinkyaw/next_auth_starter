@@ -45,7 +45,10 @@ export default function SignInForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmitLogin)}>
+      <form
+        onSubmit={form.handleSubmit(onSubmitLogin)}
+        className="space-y-4 grid"
+      >
         <FormField
           control={form.control}
           name="email"

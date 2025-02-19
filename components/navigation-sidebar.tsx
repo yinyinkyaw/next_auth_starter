@@ -15,6 +15,7 @@ import { useAuthStore } from "@/providers/AuthProvider";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import ThemeSwitcher from "./common/theme-switcher";
 import { FileText, ListTodo, LogOut, UserRound } from "lucide-react";
+import { NavUser } from "./nav-user";
 
 export default function NavigationSidebar() {
   const { user } = useAuthStore();
@@ -57,7 +58,7 @@ export default function NavigationSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <SidebarMenu>
+        {/* <SidebarMenu>
           <SidebarMenuItem className="flex items-center gap-x-2">
             <Avatar>
               <AvatarImage src={user?.photoURL || ""} />
@@ -74,7 +75,8 @@ export default function NavigationSidebar() {
         <SidebarMenuButton>
           <LogOut />
           Logout
-        </SidebarMenuButton>
+        </SidebarMenuButton> */}
+        {user ? <NavUser user={user} /> : null}
       </SidebarFooter>
     </Sidebar>
   );
